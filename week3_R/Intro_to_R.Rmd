@@ -1,0 +1,187 @@
+---
+title: "A Beginner's Guide to Programming in R"
+author: Nicole Black
+date: 07/13/22
+---
+
+Welcome to RStudio and to your first QBIO490 coding activity. This document will take you through the basics of R before we jump right into our analyses. You may work on this at your own pace, or follow along as we complete it together as a class.
+
+###### R Notebooks vs R Scripts
+
+This file is something called an R Notebook. R Notebooks are great learning tools as they allow for plain-text and code blocks to be interspersed among each other. Here's an example of a code block:
+
+```{r}
+print("This is a code block!")
+```
+
+To run a code block in an R Notebook, simply hit the green arrow button in the top right of the block. Your code will run, and any outputs will be shown below the code block as well as in your console (down below). To avoid your file getting too messy, you can collapse any unnecessary outputs by clicking the double up arrow button in the top right of the output block.
+
+In contrast to an RN otebook, an R Script is just a normal coding file. There are no code blocks or plain-text sections, just a typical file with code and comments as needed. This is what you'll be coding in once we get a little further into the semester.
+
+For now, the advantages of an R Notebook as a learning document are the plain text sections as well as the implementation where code blocks can be run independently and interactively, with the visible output blocks conveniently below the code chunks. 
+
+Now that you understand what R file types we will be using this semester, let's get started learning R!
+
+###### Variables
+
+A variable is an container that stores data within your program. In R, you do not have to specify your data type. To declare a variable, simply state the name, use either '=' or '<-', then specify the data you want to store. Based on the examples below, create your own variable called "my_var", then run the code block below to see the output!
+
+```{r}
+var_string <- "hello world!"
+var_num <- 23
+var_vector <- c(3, 2, 1)
+## add your new variable here!
+
+print(my_var)
+```
+
+Even though we don't need to specify data types in R, they still exist in the language, so let's learn a few common ones.
+
+```{r}
+null <- NULL  ## null's or na's are simply undefined values
+na <- NA
+
+bool_true <- TRUE ## a boolean value is either true or false
+bool_false <- F ## booleans can be defined in a variety of ways in R!
+bool_true_2 <- 1 ## here a boolean is defined as a number (0 = false, 1 = true)
+bool_false_3 <- 1 == 2 ## here a boolean is defined by an expression that is either true or false
+
+numeric <- 3000 ## numeric is a catch all for any number value in R
+numeric_2 <- 3.2
+numeric_3 <- -9 
+
+string <- 'A' ## a string is any text value
+string_2 <- 'Quantitative Biology' ## strings can be enclosed in single or double quotes
+string_3 <- "B"
+string_4 <- "USC" 
+
+numeric_vector <- c(2, 4, 6, 8) ## vectors contain data elements of the same data type
+string_vector <- c("hello", "ciao", "bonjour") ## they are declared by enclosing elements in c()
+
+factor <- factor(c("student", "student", "student", "teacher", "ta")) ## a factor is a categorical variable; here we have three categories (known also as levels), that are inferred from our five data elements 
+factor ## when you print the factor, you can see the data elements as well as the levels
+```
+
+There's one more very important data type (the data frame/matrix) that we'll get to later on in this notebook, but for now, a quick word on variable naming:
+
+```{r}
+## great names:
+sum_of_ages <- sum(numeric_vector) ## both of these names are great!
+sumOfAges <- sum(numeric_vector) ## just note that it's best to pick a format and stick with it
+
+## good names:
+AgeSum <- sum(numeric_vector) ## some people frown upon capitalizing the first letter
+sum.of.ages <- sum(numeric_vector) ## this works in R, but not all languages allow "."
+
+## bad names:
+sum <- sum(numeric_vector) ## unclear, sum of what?
+s <- sum(numeric_vector) ## very unclear, what does s stand for?
+sumofages <- sum(numeric_vector) ## difficult to read
+SUMOFAGES <- sum(numeric_vector) ## difficult to read, also reserve caps for important constants
+```
+
+Now that you're an expert on variables in R, let's try it out!
+
+Create four variables named 'name', 'age', 'birthday' (in a MM/DD/YYYY format), and 'three_fav_colors'. What data types are these? When you're done, write a print statement and run the code and make sure your variables were declared correctly.
+
+```{r}
+## add code here!
+```
+
+###### Functions
+
+Functions perform repeatable actions on the parameters passed into them. There are three important components to a function:
+
+1. Name
+    ~ All functions have a name that is used to call them
+    
+2: Parameters
+    ~ A parameter is passed into a function. A function can have any number of parameters, including 0, depending on the function definition
+    
+3: Return value
+    ~ The return value is the output of the function. In R, a function can return either 0 or 1 value
+    
+To call a function, use the syntax: return_value <- function_name(arg1, arg2, arg3)
+Note that it can be helpful to save the return value to a variable, as shown above, but it isn't always necessary.
+
+```{r}
+sum(3, 4, 5) ## calling the function without saving the output automatically prints to the console
+max_value <- max(1, 10, 100)
+max_value
+```
+
+Call the following functions on the list of numbers below: sum(), min(), mean(), mode()
+
+```{r}
+list_of_numbers <- c(1, 1, 2, 3, 5, 8, 13, 21)
+
+## call functions here
+```
+
+###### Writing Functions
+
+As we've seen, functions are extremely important and can make your code concise, easy to read, and reproducible. However, sometimes there isn't a set R function for what we want to do. The answer: create your own function!
+
+The syntax to create your own function and call it is as follows:
+
+```{r}
+## define your function
+function_name <- function(arg1, arg2, arg3) {
+  ## code to do something
+  return(return_value)
+}
+
+## call your function
+return_value <- function_name(arg1, arg2, arg3)
+```
+
+Remember that not all functions need a return value. For example, a plotting function would not return anything. Rather, the plot would simply show up in the plotting window in the bottom right pane of RStudio.
+
+Write a function called graph_curve that uses y=ax^2+bx+c to graph a curve when given "a", "b", and "c" as arguments. Hint, look up the function "curve" to call inside of your declared function. (Yes, you can call functions inside of functions!)
+
+```{r}
+## create function here
+
+graph_curve(2, 3, 7)
+```
+
+
+###### Logic and Control Flow
+
+Control flow allows you to run certain chunks of code under particular situations. We can do this by implementing logical statements. Logical statements are statements of equality that evaluate as booleans to either TRUE or FALSE. We can then use these to say, for example, if our logical statement is TRUE, run chunk 'A' of code, but if our logical statement is FALSE, run chunk 'B'.
+
+Below are common operators used in logical statements in R.
+
+```{r}
+"QBIO" == "QBIO" ## is equal to
+"USC" != "UCLA" ## is not equal to
+10 > 9 ## greater than
+1 < 2 ## less than
+8 >= 3 ## greater than or equal to
+4 <= 7 ## less than or equal to
+100 %in% c(10, 100, 1000, 10000) ## is present in a vector/list
+```
+
+You can also link multiple logical statements using AND (&), OR (|), or NOT (!)
+
+```{r}
+"cat" == "cat" & "dog" == "dog" ## evaluates to TRUE
+"cat" == "cat" & "fish" == "hamster" ## evaluates to FALSE
+
+1 < 2 | 3 < 5 ## evaluates to TRUE
+1 < 2 | 3 < 1 ## evaluates to TRUE
+
+"blue" %in% c("yellow", "red", "blue") &! "happy" %in% c("sad", "angry") ## evaluates to TRUE
+```
+
+"If" statements (along with "elseif" and "else" statements) are the most simple control flows to write, and they are also what we will use the majority of the time.
+
+
+
+
+
+
+
+
+
+
