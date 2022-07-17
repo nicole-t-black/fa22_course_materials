@@ -163,11 +163,12 @@ Adapt your histogram plot to be saved to your desktop.
 In our next class, we will be using the BiocManager and TCGAbiolinks packages. Go ahead and install run the following lines to install and load those packages if you haven't already (it might take a while!)
 
 If it asks "Update all/some/none? [a/s/n]:" type "a"
-If it asks "Do you want to install from sources the package which needs compilation (Yes/no/cancel)" type "Yes
+If it asks "Do you want to install from sources the package which needs compilatoin (Yes/no/cancel)" type "Yes
 
 ```{r}
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
+    BiocManager::install(version = "3.15")
 
 library(BiocManager)
 
