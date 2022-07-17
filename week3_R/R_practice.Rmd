@@ -11,7 +11,7 @@ Finally, if you get stuck, here are some common mistakes to check for:
   1. Forgetting to put quotes around a string (or vise versa)
   2. Missing an open or close parenthesis
   3. Calling a function on an argument of the wrong data type
-  4. Overwriting your data and wondering why downstream code doesn't work (this is why we recommend you make      a copy of your original data frame and only edit that copy)
+  4. Overwriting your data and wondering why downstream code doesn't work (this is why we recommend you make a copy of your original data frame and only edit that copy)
   5. General types, spelling errors, misplaced punctuation, etc.
   
 Download the data sets we will be using in this homework: 
@@ -72,14 +72,14 @@ Write a function called plot_func(x, y) that takes in two arguments, the x-axis 
 Your function should do the following:
 
   1. Identify the mean of the x-axis data and the y-axis data.
-  2. Use a series of nested ifelse() statements to create the colors vector. In a nested ifelse(), the "else"      condition is to run another ifelse(), and so on. Make sure to close the nest with the correct number of       parentheses! This vector should hold four colors. Assign a color to each of the following scenarios:
+  2. Use a series of nested ifelse() statements to create the colors vector. In a nested ifelse(), the "else" condition is to run another ifelse(), and so on. Make sure to close the nest with the correct number of parentheses! This vector should hold four colors. Assign a color to each of the following scenarios:
     a. x is greater than its mean and y is greater than its mean
     b. x is greater than its mean but y is less than its mean
     c. x is less than its mean and y is less than its mean
     d. x is less than its mean but y is greater than its mean
   3. Convert the colors vector into a factor.
   4. Print the correlation between x and y by using print(cor.test(x, y))
-  4. Use plot() to plot x and y, colored using the color vector (now a factor). Use abline() to plot a            vertical line at the x-axis mean a horizontal line at the y-axis mean. For more info on plotting with        plot() and abline(), use "?plot" and "?abline".
+  4. Use plot() to plot x and y, colored using the color vector (now a factor). Use abline() to plot a vertical line at the x-axis mean a horizontal line at the y-axis mean. For more info on plotting with plot() and abline(), use "?plot" and "?abline".
   
 Note: If you write multiple plotting lines, they will all show up on top of each other on the same plot. This can be useful at times (like in the situation above, where we want plot() and abline() to be on the same graph). If you want to create a separate plot, use "dev.off()" to clear the window and start fresh.
 
