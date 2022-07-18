@@ -35,7 +35,7 @@ getwd()
 To set your directory, type setwd("/PATH/TO/DIRECTORY"). This is similar to cd in Unix, except you need to use quotes around the directory.
 
 ```{r}
-setwd() # add your directory here (ex: /Users/nicoleblack/Desktop/qbio_nicole/week3_R)
+setwd() # add your directory here (ex: /Users/nicoleblack/Desktop/qbio_490_nicole/week3_R)
 ```
 
 Now that your environment is set up, let's get into coding!
@@ -457,7 +457,11 @@ Oftentimes we want to edit data frames to add calculated columns, delete unneces
 data_frame$new_column <- values
 ```
 
-Let's try this out! In the mtcars data frame, there is a column called "am". This column holds transmission information where 0 = automatic, and 1 = manual. But as of now, this isn't very clear. Create a new column called "transmission" that assigns the value "automatic" where am = 0, and "manual" where am = 1. You can use an ifelse statement to assign your values!
+Let's try this out! In the mtcars data frame, there is a column called "am". This column holds transmission information where 0 = automatic, and 1 = manual. But as of now, this isn't very clear.
+
+Create a new column called "transmission" that assigns the value "automatic" where am = 0, and "manual" where am = 1.
+
+You can use an ifelse statement to assign your values! Remember, ifelse() takes in three arguments: ifelse(test_condition, yes, no)
 
 ```{r}
 # write code here
@@ -546,4 +550,5 @@ install.packages("swirl")
 
 library(swirl)
 ```
+
 
