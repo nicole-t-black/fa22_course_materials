@@ -2,5 +2,8 @@
 .Icon
 .DS_Store
 
-### Data
+### TCGA Data
+GDCdata
+MANIFEST*
+htseq_h5*
 analysis_data
