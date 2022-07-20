@@ -4,6 +4,10 @@ author: Nicole Black
 date: 07/16/22
 ---
 
+```{r setup}
+    knitr::opts_knit$set(root.dir = normalizePath("/PATH/TO/DIRECTORY")) 
+```
+
 Answer the following questions to the best of your ability. DO NOT use loops in your implementation (it isn't necessary for any of these questions). If you have questions, be sure to reach out to Nicole/TAs via slack, or attend office hours! We're always are happy to help!
 
 Finally, if you get stuck, here are some common mistakes to check for:
@@ -63,13 +67,23 @@ Use the function nrow() to count the number of rows in attenu and attenu_cleaned
 # write code here
 ```
 
-###### Writing functions
+###### Plotting
 
-A common plot might be comparing the data in two columns and color coding them based on a third level of data.
+There are many types of plots in R, each with many types of customizations. Here we will create a boxplot, histogram, scatterplot, and Draftsman's or Pairs Scatter Plots. The associated functions are boxplot(), hist(), plot(), and pairs().
 
-Write a function called plot_func(x, y) that takes in two arguments, the x-axis data and the y-axis data.
+Create a boxplot that splits the sepal length data into groups by species.
 
-Your function should do the following:
+```{r}
+# write code here
+```
+
+Create a histogram of petal length.
+
+```{r}
+# write code here
+```
+
+Choose any two columns from the iris data set. Create a scatterplot that compares these columns, color coded based on the values relative to their means. Follow these steps to create your plot:
 
   1. Identify the mean of the x-axis data and the y-axis data.
   2. Use a series of nested ifelse() statements to create the colors vector. In a nested ifelse(), the "else" condition is to run another ifelse(), and so on. Make sure to close the nest with the correct number of parentheses! This vector should hold four colors. Assign a color to each of the following scenarios:
@@ -86,26 +100,6 @@ Note: If you write multiple plotting lines, they will all show up on top of each
 ```{r}
 # write function here
 
-# run these lines (one by one) to test your function
-plot_func(attenu_cleaned$mag, attenu_cleaned$accel)
-
-plot_func(iris$Sepal.Length, iris$Sepal.Width)
-```
-
-###### Plotting
-
-In the above exercise, you learned how to make a scatterplot. There are many types of plots in R, each with many types of customizations. Here we will create a boxplot, histogram, and Draftsman's or Pairs Scatter Plots. The associated functions are boxplot(), hist(), and pairs().
-
-Create a boxplot that splits the sepal length data into groups by species.
-
-```{r}
-# write code here
-```
-
-Create a histogram of petal length.
-
-```{r}
-# write code here
 ```
 
 Create a Draftsman's or Pairs Scatter Plot that looks at the sepal length, sepal width, petal length, and petal width colored by the species. You can play around with various other arguments to make this plot as readable as possible. (HINT: Google how to color by factor with the "col" argument)
