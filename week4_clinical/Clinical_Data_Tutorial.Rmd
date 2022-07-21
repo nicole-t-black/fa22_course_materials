@@ -110,10 +110,10 @@ The statement you just wrote (x == y) is called an assert statement, and it can 
 ###### Kaplan-Meier Plots
 
 Now, we're going to look at Kaplan-Meier plots separated by age category. A Kaplan-Meier plot (KM plot) is a survival curve that shows the probability of survival based on a certain factor (ex: age, treatment, sex, etc.) at a certain point in time. This plot allows us to determine whether a given factor affects survival probabilities, and if so, how. For more info on KM plots, read the following two articles:
-    1. 
-    2.
+    1. https://towardsdatascience.com/kaplan-meier-curves-c5768e349479
+    2. https://www.mygreatlearning.com/blog/kaplan-meier-curve-explained/#:~:text=The%20Kaplan%20Meier%20Curve%20is%20the%20visual%20representation%20of%20this,sample%20size%20is%20large%20enough.
     
-Before we get started, install and load the "survival" and "survminer" packages.
+Before we get started, install and load the "survival" and "survminer" packages. Also install/load ggplot2 if it is not already on in your RStudio.
 
 ```{r}
 # install and load packages 
@@ -121,7 +121,65 @@ Before we get started, install and load the "survival" and "survminer" packages.
 
 To create a KM plot, we need three sets of data: survival_time, death_event, and a grouping variable (in this case, age_category).
 
-Let's create a column in clinical called survival_time.
+Let's create a column in clinical called survival_time. For some patients, we can find survival time using their days_to_death info. But for others, namely those who never had a registered death event, days_to_death = NA, and our best estimate becomes days_to_last_follow_up, since that is the longest definitive time we can say they survived. Using the days_to_death and days_to_last_follow_up columns, create a your survival_time column in clinical.
+
+```{r}
+# write code here 
+# HINT: use ifelse() and is.na()
+```
+
+Next, create the death_event column. This column will store a boolean variable that is TRUE if there was a death event, or FALSE if there was no recorded event. You can use the vital_status column and an ifelse() statement to make this column.
+
+```{r}
+# write code here
+```
+
+Now we can perform our analysis! Read the Help info for each function, then fill in the blanks with the columns you created (age_category, survival_time, death_event).
+
+```{r}
+# Initialize a 'survival' object, which contains the data we need.
+?Surv
+surv_object_age <- Surv(time = FILL_IN_HERE,
+                    event = FILL_IN_HERE)
+
+# Create a fit object
+# When writing formulas (x ~ y), x is what's being plotted and y (known as a "feature") is what is grouping x into categories
+?surv_fit
+age_fit <- surv_fit( surv_object ~ FILL_IN_HERE,
+                     data = clinical )
+
+#the ggtheme and legend arguments are for formatting. 
+# Feel free to play around with the margins and legend placement
+# Use ?ggsurvplot
+?ggsurvplot
+survplot_age = ggsurvplot(age_fit, 
+           pval=TRUE, 
+           ggtheme = theme(plot.margin = unit(c(1,1,1,1), "cm")), 
+           legend = "right")
+
+KM_plot_age = survplot_age$plot + 
+  theme_bw() +  # changes the appearance to be a bit prettier
+  theme(axis.title = element_text(size=20), # increase font sizes
+        axis.text = element_text(size=16),
+        legend.title = element_text(size=14),
+        legend.text = element_text(size=12))
+
+KM_plot_age
+```
+
+Take a moment to look at your plot and try to understand what it is saying. Write some observations key takeaways below:
 
 ###### Saving files
+
+Great job so far! In this tutorial you explored the clinical data frame, you practiced boolean indexing, and you created a Kaplan-Meier plot.
+
+Before closing out, save your edited clinical data frame to your local machine so you don't need to requery it each time you use it.
+
+Remember, you can use write.csv() to save a data frame to a .csv file, and you can use read.table() to read a .csv file back into a data frame.
+
+```{r}
+# change the file path! make sure it's in your week4 folder
+# we set row.names to false since the rows don't contain any relevant info
+write.csv(clinical, "/PATH/TO/DESTINATION/brca_clinical_data.csv", row.names = FALSE)
+```
 
