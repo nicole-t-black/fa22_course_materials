@@ -1,0 +1,42 @@
+---
+title: "RNAseq Tutorial"
+author: Nicole Black
+date: 07/25/22
+---
+
+###### (1) Set Up
+
+Set your working environment to analysis_data:
+
+```{r setup}
+    knitr::opts_knit$set(root.dir = normalizePath("/PATH/TO/analysis_data")) 
+```
+
+Load in any necessary packages:
+
+```{r}
+# load in packages
+```
+
+Read in your data files using read.csv(). If row.names was equal to TRUE when you were writing the files, header will also be equal to TRUE (and vise versa).
+
+```{r}
+rna_clinical <-
+rna_counts <-
+rna_genes <-
+```
+
+###### (2) Cleaning up your data frames
+
+```{r}
+
+```
+
+
+###### (3) Exploring the Data Frames
+
+
+
+###### (4) Plotting
+
+

@@ -1,5 +1,5 @@
 ---
-title: "Practice in R"
+title: "R Tutorial"
 author: Nicole Black
 date: 07/16/22
 ---
@@ -25,7 +25,7 @@ data(attenu) # peak earthquake accelerations measured at various observation sit
 data(iris) # various measurements for flowers of different species
 ```
 
-###### Boolean Masking
+###### (1) Boolean Masking
 
 Use is.na() to identify any rows with missing station data in the attenu data set. Save the output of your is.na() statement to a vector called "na_boolean_mask", then print it to view it.
 
@@ -67,7 +67,7 @@ Use the function nrow() to count the number of rows in attenu and attenu_cleaned
 # write code here
 ```
 
-###### Plotting
+###### (2) Plotting
 
 There are many types of plots in R, each with many types of customizations. Here we will create a boxplot, histogram, scatterplot, and Draftsman's or Pairs Scatter Plots. The associated functions are boxplot(), hist(), plot(), and pairs().
 
@@ -110,7 +110,7 @@ Create a Draftsman's or Pairs Scatter Plot that looks at the sepal length, sepal
 
 The Draftsman's plot above is interesting since it looks like using these four measurements, a fairly accurate species prediction can be made! This is an example of a cluster analysis, and you can certainly use a plot like this one later on to explore cancer predictors.
 
-###### Writing files/saving plots
+###### (3) Writing files/saving plots
 
 Often, we want to save results data frames to a local machine so they can be saved, shared, or further explored with other software. To do this, we have to "write" the file. To do this, use write.csv() as follows:
 
@@ -127,12 +127,12 @@ Save the attenu_cleaned to your desktop, then view it from your GUI.
 Along with writing files, we oftentimes want to read files into our R environment. These files could be result files, raw data, etc. We read in csv files using read.table() as follows:
 
 ```{r}
-read.table("/PATH/TO/FILE/file.csv", header = TRUE, sep = "\t")
+df <- read.csv("/PATH/TO/FILE/file.csv", header = TRUE)
 ```
 
-The header (boolean value) tells R whether the file contains the names of the variables as the first line. The sep argument tells R what is used as a separater character. You might have heard of csv (comma separated value) files or tsv (tab separated value) files. This defaults to "," for a csv, but if your file is tab separated, you can specify that with "\t".
+The header (boolean value) tells R whether the file contains the names of the variables as the first line.
 
-Read in your attenu_cleaned file.
+Read in your attenu_cleaned file to a data frame called attenu_read_in.
 
 ```{r}
 # write code here
@@ -152,12 +152,12 @@ Adapt your histogram plot to be saved to your desktop.
 # write code here
 ```
 
-###### Looking Ahead
+###### (4) Looking Ahead
 
 In our next class, we will be using the BiocManager and TCGAbiolinks packages. Go ahead and install run the following lines to install and load those packages if you haven't already (it might take a while!)
 
 If it asks "Update all/some/none? [a/s/n]:" type "a"
-If it asks "Do you want to install from sources the package which needs compilatoin (Yes/no/cancel)" type "Yes
+If it asks "Do you want to install from sources the package which needs compilation (Yes/no/cancel)" type "Yes
 
 ```{r}
 if (!require("BiocManager", quietly = TRUE))
@@ -171,3 +171,4 @@ if (!require("TCGAbiolinks", quietly = TRUE))
 
 library(TCGAbiolinks)
 ```
+

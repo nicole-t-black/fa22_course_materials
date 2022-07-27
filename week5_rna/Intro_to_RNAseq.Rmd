@@ -1,0 +1,158 @@
+---
+title: "Introduction to RNAseq"
+author: Nicole Black
+date: 07/24/22
+---
+
+```{r setup}
+    knitr::opts_knit$set(root.dir = normalizePath("/PATH/TO/analysis_data")) 
+```
+
+```{r}
+# install, only if needed, and load packages (SummarizedExperiment and TCGAbiolinks)
+```
+
+Query, download, and prepare the RNA Transcriptomics data in to your R work space.
+
+```{r}
+rna_query <- GDCquery(project = FILL IN HERE,
+                      data.category = "Transcriptome Profiling",
+                      data.type = "Gene Expression Quantification",
+                      workflow.type = "STAR - Counts")
+
+GDCdownload(rna_query)
+
+rna_se <- GDCprepare(rna_query)
+```
+
+###### (1) Summarized Experiment Basics
+
+Let's take a look at rna_se (RNA Summarized Experiment). Call head() and str(). Also explore the data frame by double clicking on it from the Environment panel.
+
+```{r Exercise 1.1}
+# write code here
+```
+
+Use the dim() function to find the dimensions of the colData, rowRanges, and unstranded dataframes. Record them below:
+
+  ~ colData (rows, cols):
+  ~ rowRanges:
+  ~ unstranded:
+
+```{r Exercise 1.2}
+# write code here
+```
+
+Run the following code and fill out a description of the rows/columns of our data frames.
+  ~ colData
+        - Rows:
+        - Columns:
+  ~ rowRanges
+        - Rows:
+        - Columns:
+  ~ unstranded (in assays)
+        - Rows:
+        - Columns:
+  
+```{r Exercise 1.3}
+rownames(ADD COLDATA HERE)
+colnames(ADD COLDATA HERE)
+
+str(ADD ROWRANGES HERE)
+# what are the rows... use your logic
+
+# try rownames(), colnames(), and str() on unstranded
+# how do we find out the row/column data??
+```
+
+###### (2) ColData
+
+View the first 10 values in the age_at_index column.
+
+```{r Exercise 2.1}
+# write code here
+```
+
+Call summary on the age_at_index column. Record the output below:
+    Min.:
+    1st Qu.:
+    Median:
+    Mean:
+    3rd Qu.:
+    Max.:
+    NA's:
+    
+```{r Exercise 2.2}
+# write code here
+```
+
+Create a data frame called rna_clinical that contains data from colData, except for the NA patient and their data. HINT: this is boolean masking!!
+
+```{r Exercise 2.3}
+na_mask <-
+rna_clinical <- 
+```
+
+Use the as.data.frame() function to change this from an S4 object to a data frame object
+
+```{r Exercise 2.4}
+rna_clinical <- as.data.frame(rna_clinical)
+```
+
+Save rna_clinical to your week5 folder.
+
+```{r Exercise 2.5}
+write.csv(rna_clinical, "/PATH/TO/FILE/brca_rna_clincial_data.csv", row.names = TRUE)
+```
+
+###### (3) RowRanges
+
+Call head() on rowRanges:
+
+```{r Exercise 3.1}
+# write code here
+```
+
+Create a data frame called rna_genes that contains data from rowRanges.
+
+```{r Exercise 3.2}
+rna_genes <- rna_se@rowRanges@elementMetadata
+```
+
+Use the as.data.frame() function to change this from an S4 object to a data frame object
+
+```{r Exercise 2.4}
+rna_genes <- as.data.frame(rna_genes)
+```
+
+Save rna_genes to your week5 folder.
+
+```{r Exercise 3.4}
+write.csv(rna_genes, "/PATH/TO/FILE/brca_rna_gene_data.csv", row.names = TRUE)
+```
+
+###### (4) Assays
+
+What are the names of the 6 assays?
+
+```{r Exercise 4.1}
+# access the assays here
+```
+
+Create a new data frame called "rna_counts" that contains the data from unstranded. Recall the patient with NA age data? We need to exclude that patient. We can use the same mask to do this.
+
+```{r Exercise 4.2}
+rna_counts <- FILL IN HERE (and use na_mask)
+```
+
+Fetch the data for the first 5 patients and the first 15 rows.
+
+```{r Exercise 4.3}
+# write code here
+```
+
+Save rna_genes to your week5 folder.
+
+```{r Exercise 4.4}
+write.csv(rna_counts, "/PATH/TO/FILE/brca_rna_count_data.csv", row.names = TRUE)
+```
