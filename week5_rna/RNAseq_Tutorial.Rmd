@@ -28,15 +28,93 @@ rna_genes <-
 
 ###### (2) Cleaning up your data frames
 
-```{r}
+Just like we did to "clinical", we are going to create a column in rna_clinical for age_category. Our cutoff will be the same ("young" as < 50 y/o, and "old" as >= 50 y/o).
 
+There are three age columns in rna_clinical. Which one should we use? Explore the rna_clinical data frame and find the three age related columns. Call summary() on all of them and based on the results, determine which column to use.
+
+```{r}
+# write code here
+
+# Hint: if you're really stuck finding the columns/determining which to use, go to the bottom of the "Cleaning up your data frames" section for the answers. Only do this once you've given it a good shot on your own!
 ```
 
+Now that you have your existing data column. Use this with an ifelse() statement to create a new column in rna_clinical called age_category. Remember ifelse(expression, x, y), where x happens if the expression is true, and y happens if it is false.
+
+```{r}
+# write code here
+```
+
+Make another column in rna_clinical called five_yr_surv that contains TRUEs and FALSEs for whether a patient survived 5 years. Use days_to_death, or (if days_to_death is NULL), days_to_last_follow_up. Note: 1 year = 365.25 days.
+
+```{r}
+# write code here
+
+# Hint: if you're really stuck, go to the bottom of the "Cleaning up your data frames" section for some help. Only do this once you've given it a good shot on your own!
+```
+
+Let's move on to rna_genes. Call rownames() and colnames() on rna_genes.
+
+```{r}
+# write code here
+```
+
+As you can see, the column names are informative, but the gene names are not. Let's fix this. Use the row.names() function to name the rows according to gene_id. Note: it would be nice to use gene_name instead of gene_id for the row names, but there are duplicate values in the gene_name column, and row names must be unique.
+
+```{r}
+?row.names
+
+# add row names here
+```
+
+Now that rna_genes has informative row/column names, let's move on to rna_counts. Call rownames() and colnames() on rna_counts.
+
+```{r}
+# write code here
+
+colnames(rna_counts)
+```
+
+Uh oh! Looks like neither the row nor column names are very informative. Given what we did to the rna_genes data frame, add new column and row names to rna_counts. Name the columns based on the patient barcodes (ie the column names for rna_clinical), and name the rows based on the gene id's (ie the column names for rna_gene).
+
+```{r}
+# write code here
+```
+
+Great! Now all of our data frames are ready for exploration and analysis.
+
+-- Hints --
+
+Age columns:
+  rna_clinical$age_at_diagnosis (16 NAs) (in days, not years)
+  rna_clinical$age_at_index (0 NAs) <-- use this!
+  rna_clinical$paper_age_at_initial_pathologic_diagnosis (132 NAs)
+  
+Five year survival help:
+  1. 5yr_death <- ifelse(FILL IN HERE)
+  2. 5yr_death_and_or_followup <- ifelse(is.na(5yr_death), ifelse(FILL IN HERE), 5yr_death)
+  3. rna_clinical$five_year_surv <- FILL IN HERE
 
 ###### (3) Exploring the Data Frames
 
+Recall the %in% function that allows us to check whether a value is present in a vector. Ex:
 
+```{r}
+fruit_list <- c("peach", "pomegranate", "cherry", "apricot", "kiwi")
+"apple" %in% fruit_list # output: FALSE
+"kiwi" %in% fruit_list # output: TRUE
+```
 
+Using your knowledge from the literature presentations, Google, etc., pick two genes that are important in breast cancer. List them below.
+    ~ Gene 1 Name:            Gene 1 ENSEMBL ID:
+    ~ Gene 2 Name:            Gene 2 ENSEMBL ID:
+    
+Using the %in% function, check that these two genes are in the rna_genes data. If they aren't pick a new gene. Hint: think about which column(s) you can check in?
+
+```{r}
+# write code here
+```
+
+Keep these genes in mind! We'll come back to them in the plotting section.
 ###### (4) Plotting
 
 

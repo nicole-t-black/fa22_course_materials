@@ -99,9 +99,16 @@ Use the as.data.frame() function to change this from an S4 object to a data fram
 rna_clinical <- as.data.frame(rna_clinical)
 ```
 
-Save rna_clinical to your week5 folder.
+Make a mask and subset out the treatments column.
 
 ```{r Exercise 2.5}
+treatments_mask <- 
+rna_clinical <- rna_clinical[ PUT MASK HERE ]
+```
+
+Save rna_clinical to your week5 folder.
+
+```{r Exercise 2.6}
 write.csv(rna_clinical, "/PATH/TO/FILE/brca_rna_clincial_data.csv", row.names = TRUE)
 ```
 
@@ -121,7 +128,7 @@ rna_genes <- rna_se@rowRanges@elementMetadata
 
 Use the as.data.frame() function to change this from an S4 object to a data frame object
 
-```{r Exercise 2.4}
+```{r Exercise 3.3}
 rna_genes <- as.data.frame(rna_genes)
 ```
 
@@ -151,8 +158,14 @@ Fetch the data for the first 5 patients and the first 15 rows.
 # write code here
 ```
 
-Save rna_genes to your week5 folder.
+Use the as.data.frame() function to change this from a matrix object to a data frame object
 
 ```{r Exercise 4.4}
+rna_counts <- as.data.frame(rna_counts)
+```
+
+Save rna_counts to your week5 folder (warning: this will take a while!)
+
+```{r Exercise 4.5}
 write.csv(rna_counts, "/PATH/TO/FILE/brca_rna_count_data.csv", row.names = TRUE)
 ```
