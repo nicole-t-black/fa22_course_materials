@@ -1,0 +1,182 @@
+---
+title: "DESeq2 Tutorial"
+author: Nicole Black
+date: 07/30/22
+---
+
+```{r setup}
+    knitr::opts_knit$set(root.dir = normalizePath("/PATH/TO/analysis_data")) 
+```
+
+```{r}
+# install "DESeq2" using BiocManager::install()
+
+# load DESEq2, SummarizedExperiment, and TCGABiolinks
+```
+
+```{r}
+rna_se <- READ IN
+rna_counts <- READ IN
+rna_genes <- READ IN
+rna_clinical <- READ IN
+```
+
+###### (1) Setting up and preprocessing our data
+
+Firstly, we must convert the age_category column to a factor. Recall from the intro to R notebook that a factor is a categorical data type that stores values as well as different levels (a list of unique values). For example, within a column called 'grade' we might have the levels 'Freshman', 'Sophomore', 'Junior', 'Senior'.
+
+Use as.factor() to convert rna_clinical$age_category into a factor.
+
+```{r}
+?as.factor
+
+# write code here
+```
+
+After factor conversion, check the levels by printing out the following:
+
+```{r}
+head(rna_clinical$age_category)
+```
+
+Note that in addition to the first few values, we now also see "Levels: old young". This indicates that rna_clinical$age_category was successfully converted into a factor.
+
+Now, let's move on to processing the rna_counts df. Here, we should remove all genes where the total number of counts (across all patients) is less than 10.
+
+```{r}
+# use rowSums() to create a list with the total number of counts of each gene
+row_sums <- FILL IN HERE
+
+# create a boolean mask where genes with < 10 total counts are FALSE, and genes with >= 10 total counts are TRUE
+low_counts_mask <- FILL IN HERE
+
+# rewrite the rna_counts df, subsetting for only genes with >= 10 total counts
+rna_counts <- FILL IN HERE
+```
+
+Now we're ready for the analysis!
+
+###### (2) Running DESeq2
+
+To break down what analysis actually takes place within the DESeq2 pipeline:
+
+1. The DESeqDataSetFromMatrix() function processes your transcript count data (rna_counts), the phenotypic data (rna_clinical), and the categories you want to compare on (the design argument) to create a DESeqDataSet object (dds). The ~ indicates the variable name you want to split the data on; in this case, it compares the age_category the levels ("young"/"old").
+
+2. The DESeq() function runs the comparisons and statistical analysis. This will likely take the bulk of the run time. Don't worry if this takes quite a while to run, just let it take its time.
+
+3. The resultsNames() function will tell you what comparisons have been run. It’s helpful for when you have more than two levels in your experiment (in our case, there are just two, "young" and "old").
+
+4. The results() function will make the comparisons readable. The contrasts argument calculates the fold change in "young" vs. "old", with the second level in the list being the denominator in the fold change (ie the baseline for the expression calculations).
+
+```{r}
+dds = DESeqDataSetFromMatrix(countData = FILL IN HERE,
+                             colData = FILL IN HERE,
+                             design = ~age_category)
+
+dds_obj = DESeq(dds)
+resultsNames(dds_obj)  # see what comparisons got run
+
+# get the young vs. old comparison
+results = results(dds_obj, format = "DataFrame", contrast = c("age_category", "young", "old"))
+```
+
+
+```{r}
+dds = DESeqDataSetFromMatrix(countData = rna_counts,
+                             colData = rna_clinical,
+                             design = ~age_category) # note: in the future, you can add a condition to the design (ex: design = ~age_category +condition), this condition allows you to control for a variable, for example, stage at diagnosis, primary diagnosis, race, etc.
+
+dds_obj = DESeq(dds) # note: this will likely take a long time (ie ~15-20 minutes)
+resultsNames(dds_obj)
+
+# get the young vs. old comparison
+results = results(dds_obj, format = "DataFrame", contrast = c("age_category", "young", "old"))
+```
+
+###### (3) Analyzing and saving the data
+
+First, explore the results df using head(), str(), and by double clicking on it in the Environment panel.
+
+```{r}
+# write code here
+```
+
+We're not interested in all of these columns, so use data.frame() to rewrite results in the column order: gene id, log2foldchange, pvalue, padj, log10(padj). Rename the columns using colnames().
+
+```{r}
+# write code here
+results <- data.frame(FILL IN HERE)
+
+colnames(results) <- c("FILL IN HERE")
+```
+
+It's oftentimes most interesting to look at genes that are highly over/under expressed at a significance level p < 0.05. 
+
+First, subset out only genes that have a padj value < 0.05.
+
+```{r}
+sig_results <- FILL IN HERE
+```
+
+Now, sort the data frame by log2foldchange, ascending. To do this, use the order() function. The order() function returns a vector of the sorted indexes of your chosen data, from smallest to largest. For example:
+
+```{r}
+my_df = data.frame(x = c('index 1', 'index 2', 'index 3', 'index 4', 'index 5'),
+                   y = c(2,4,3,5,1))
+
+order_indexes = order(my_df$y) # order by column "y"
+
+# we would expect order_indexes to be c(5, 1, 3, 2, 4) since the value 2 has the index 5, the value 2 has the index 1, the value 3 has the index 3, etc.
+
+order_indexes
+
+my_df = my_df[order_indexes, ] # this rewrites the df based on the sorted rows
+my_df # check your df to see if it is sorted by the y values
+```
+
+Use the logic above to sort the data frame by log2foldchange. Note that this can also be done in one line by bypassing the use of order_indexes as an intermediate variable.
+
+```{r}
+up_reg_results <-
+```
+
+Subset out all genes in up_reg_results where the log2foldchange is < 1 (ie genes that are approximately equally expressed between your populations).
+
+```{r}
+# write code here
+```
+
+Repeat the same steps to create a data frame called down_reg_results. Note that you can set the decreasing argument to true in the order(function).
+
+```{r}
+# write code here
+```
+
+Explore the up_reg_results and down_reg_results by calling head() on both of them.
+
+```{r}
+# write code here
+```
+
+Choose one up regulated (overexpressed) gene and one down regulated (underexpressed) gene and fill out the following information:
+
+Gene ensembl id:
+Log2FoldChange:
+p-adj value:
+More highly expressed in young or old patients:
+Google the gene. What is its full name, and what appears to be its function? Genecards generally has a pretty good summary:
+
+Gene ensembl id:
+Log2FoldChange:
+p-adj value:
+More highly expressed in young or old patients:
+Google the gene. What is its full name, and what appears to be its function? Genecards generally has a pretty good summary:
+
+Write the up_reg_results, down_reg_results, and results tables to the week6 folder using write.csv().
+
+```{r}
+# write code here
+```
+
+###### (4) Creating volcano plots
+

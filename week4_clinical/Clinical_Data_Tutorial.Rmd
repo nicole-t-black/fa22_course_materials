@@ -175,3 +175,19 @@ Remember, you can use write.csv() to save a data frame to a .csv file, and you c
 write.csv(clinical, "/PATH/TO/DESTINATION/brca_clinical_data.csv", row.names = FALSE)
 ```
 
+###### (5) Looking Ahead
+
+Query, download, and prepare the RNA Transcriptomics data in to your R work space. Confirm that your working directory is analysis_data before you run these lines.
+
+Note that this is super slow!! Don't worry, just wait it out.
+
+```{r}
+rna_query <- GDCquery(project = FILL IN HERE,
+                      data.category = "Transcriptome Profiling",
+                      data.type = "Gene Expression Quantification",
+                      workflow.type = "STAR - Counts")
+
+GDCdownload(rna_query)
+
+rna_se <- GDCprepare(rna_query)
+```
