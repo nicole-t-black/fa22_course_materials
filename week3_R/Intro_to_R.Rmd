@@ -100,7 +100,7 @@ There's one more very important data type (the data frame/matrix) that we'll get
 sum_of_ages <- sum(numeric_vector) # snake case
 sumOfAges <- sum(numeric_vector) # camel case
 
-## good names:
+## fine names:
 AgeSum <- sum(numeric_vector)
 sum.of.ages <- sum(numeric_vector)
 
@@ -138,11 +138,11 @@ Note that it can be helpful to save the return value to a variable, as shown abo
 ```{r Exercise 4.1}
 sum(3, 4, 5) ## calling the function without saving the output automatically prints to the console
 
-max_value <- max(1, 10, 100)
+max_value <- max(1, 10, 100) ## storing to a variable does not automatically print
 max_value
 ```
 
-Call the following functions on the list of numbers below: sum(), min(), mean(), mode()
+Call the following functions on the list of numbers below: sum(), min(), mean(), mode(), summary()
 
 ```{r Exercise 4.2}
 list_of_numbers <- c(1, 1, 2, 3, 5, 8, 13, 21)
@@ -152,7 +152,7 @@ list_of_numbers <- c(1, 1, 2, 3, 5, 8, 13, 21)
 
 ###### (5) Logic and Control Flow
 
-Control flow allows you to run certain chunks of code under particular situations. We can do this by implementing logical statements. Logical statements are statements of equality that evaluate as booleans to either TRUE or FALSE. We can then use these to say, for example, if our logical statement is TRUE, run chunk 'A' of code, but if our logical statement is FALSE, run chunk 'B'.
+Control flow allows you to run certain chunks of code under particular situations. We can do this by implementing logical statements. Logical statements are statements of equality that evaluate as booleans to either TRUE or FALSE. For example, if our logical statement is TRUE, we can then control flow to run chunk 'A' of code, and if our logical statement is FALSE, we could use that same control flow to run chunk 'B'.
 
 Below are common operators used in logical statements in R. Run each statement to see what it evaluates to.
 
@@ -183,19 +183,19 @@ Predict what each statement will evaluate to:
 
 "If" statements (along with "else if" and "else" statements) are the most simple control flows to write, and they are also what we will use the majority of the time.
 
-The syntax for "if", "else if", and "else" statements is as follows. Add conditions and actions so that the "if" statement is skipped, and the "else if" runs, printing out "Success!". Run the block to test.
+The syntax for "if", "else if", and "else" statements is as follows. Fill in conditions and actions so that the "if" statement is skipped, and the "else if" runs, printing out "Success!". Run the block to test.
 
 ```{r Exercise 5.3}
 if (condition) {
-  # do something
+  # action
 } else if (condition) {
-  # do something
+  # action
 } else {
-  # do something
+  # action
 }
 ```
 
-An "if" block can be used alone, in conjunction with an "else" block, or in conjunction with any number of "else if" blocks that can end in up to one "else" block. Note that you cannot have an "else if" or an "else" block without an "if" statement.These blocks are executed in order until one expression is true. At a true expression, the contents of the block runs, and the control flow is exited (ie none of the below blocks are tested).
+An "if" block can be used alone, in conjunction with an "else" block, or in conjunction with any number of "else if" blocks that can end in up to one "else" block. Note that you cannot have an "else if" or an "else" block without an "if" statement. These blocks are executed in order until one expression is true. At a true expression, the contents of the block runs, and the control flow is exited (ie none of the below blocks are tested).
 
 Sometimes using "if... else if... else" doesn't work. You might get the error code: "the condition has length > 1". This is because an if statement only checks ONE element to evaluate the condition. To performs an element-wise evaluation on a vector, we must use ifelse(), a vectorized function. The syntax is follows:
 
@@ -237,7 +237,7 @@ If you want to do one action multiple times or run the same operation on a large
 
 While loops are like if statements that repeat multiple times until the condition is no longer true. The syntax is as follows:
 
-```{r Exercise 6.1}
+```{r Exercise 6.1 - syntax of a while loop}
 while (condition) {
   # do something
   # update condition
@@ -341,7 +341,7 @@ You can access an item in a vector using bracket notation as follows;
 ```{r Exercise 7.1}
 vector <- c("CSCI102", "CSCI103", "CSCI104")
 
-vector[3]
+vector[3] ## remember that R is a one indexed language, so we start counting from 1 (not 0)
 ```
 
 The reason why vectors are so import for us is that R is a vectorized language, meaning it is specifically set up to work well with vectorized data. Many of the built in functions work just the same on vectorized objects as they do on individual objects. Hence, we should always try to utilize these functions on vectors rather than doing the same work with a loop working on an individual object.
@@ -351,7 +351,7 @@ Let's explore this further (you don't need to fully understand everything here q
 ```{r Exercise 7.2}
 vector <- 1:10^6 # here's a huge vector (all numbers between 1 and 10^6)
 
-loop_sum <- function(vector) { # here, we sum up the elements in "vector" using a loop
+loop_sum <- function(vector) { # here, I created a user-defined function that sums up the elements in "vector" using a loop
   x=0
   for (i in vector) {
     x = x + i
@@ -359,7 +359,7 @@ loop_sum <- function(vector) { # here, we sum up the elements in "vector" using 
   return(x)
 }
 
-function_sum <- sum(vector) # here, we sum up the elements in "vector" using a built in function
+function_sum <- sum(vector) # here, we sum up the elements in "vector" using a built-in vectorized function
 
 loop_sum(vector) == function_sum # tests that these are equal
 ```
@@ -393,7 +393,7 @@ data(mtcars)
 
 The easiest way to view a data frame is to simply click on it! This will open up the matrix in a new tab. You can then explore the data visually.
 
-However, this is not always helpful, especially when looking at larger matrices. We can use head() and str() to give us a better view in the console itself.
+However, this is not always helpful, especially when looking at larger or more complex data frames. We can use head() and str() to give us a better view in the console itself.
 
 ```{r Exercise 8.2}
 head(mtcars) # just like in the terminal, you can use head to view the first few rows of a data frame
@@ -408,22 +408,23 @@ str(mtcars) # str stands for structure
 Running str() will give us info about the structure of the data frame. We can see the data type (data.frame), the number of rows (obs.) and columns (variables), the general data type of each column (num), and a preview of the data in each column.
 
 Note the "$" before each column name. In R, the dollar sign always refers to columns.
-We can view a singular column with the notation: df_name$rowname
-Use this syntax to view the mpg column of the mtcars dataframe
+We can view a singular column with the notation: df_name$row_name
+
+Use this syntax to view the mpg column of the mtcars data frame.
 
 ```{r Exercise 8.4}
 # add code here
 ```
 
-What if we want to view a column (or row), but don't know it's exact name? We can get all column names or all row names by using the functions colnames() and rownames(). Call those below, then view the carburetor column using dollar sign notation.
+What if we want to view a column, but don't know it's exact name? We can get all column names (or all row names) by using the functions colnames() and rownames(). Call those below, then view the carburetor column using dollar sign notation.
 
 ```{r Exercise 8.5}
 # call functions here
 
-mtcars$carburetor_column_name # add name of carburetor column here
+mtcars$carburetor_column_name # fill in name of carburetor column here
 ```
 
-We can also view particular subsets of the data frame by using the [row, column] notation.
+We can also view particular subsets of the data frame by using the df[row, column] notation.
 
 ```{r Exercise 8.6}
 mtcars[2, 4] # access the value from the second row, fourth column (this is the horsepower of a Mazda RX4 Wag)
@@ -439,7 +440,7 @@ mtcars[-(3:30), ] # access everything EXCEPT rows 3 through 30
 mtcars[ , c(-(1:4), -6)] # access everything EXCEPT columns 1 through 4 and column 6
 ```
 
-Select the horse power data for the Duster 360, Lincoln Continental, and Maserati Bora. Instead of viewing the matrix to determine which rows and column numbers you want to specify, use rownames() and colnames().
+Select the horse power data for the Duster 360, Lincoln Continental, and Maserati Bora. Instead of manually viewing the matrix to determine which rows and column numbers you want to specify, use rownames() and colnames().
 
 ```{r Exercise 8.7}
 # write code here
@@ -447,13 +448,15 @@ Select the horse power data for the Duster 360, Lincoln Continental, and Maserat
 
 ###### (9) Editing data frames
 
-Oftentimes we want to edit data frames to add calculated columns, delete unnecessary rows, etc. You can create a column using the "$" notation to specify the new column name, and "<-" to assign some values to the new column. The syntax is as follows:
+Oftentimes we want to edit data frames to add calculated columns, delete unnecessary rows, subset to a particular view, etc.
+
+You can create a column using the "$" notation to specify the new column name, and "<-" to assign some values to the new column. The syntax is as follows:
 
 ```{r Exercise 9.1}
 data_frame$new_column <- values
 ```
 
-Let's try this out! In the mtcars data frame, there is a column called "am". This column holds transmission information where 0 = automatic, and 1 = manual. But as of now, this isn't very clear.
+Let's try this out! In the mtcars data frame, there is a column called "am". This column holds transmission information where 0 = automatic, and 1 = manual. But as of now, this isn't very clear without knowing that information.
 
 Create a new column called "transmission" that assigns the value "automatic" where am = 0, and "manual" where am = 1.
 
@@ -465,7 +468,7 @@ You can use an ifelse statement to assign your values! Remember, ifelse() takes 
 
 Now that we have the "transmission" column, the "am" column is no longer particularly useful. Let's delete it.
 
-You can easily delete a row/column by subsetting around it using [row, column] notation. Simply choose all of the rows/columns you want to keep (ignoring the ones you want to delete), and assign the subset to either the original data frame variable (to permanently delete the rows/columns), or to a new variable storing an edited copy of the data frame. In general, it is best to create a copy that way you always have access to your original unedited data frame.
+You can easily delete a row/column by subsetting around it using df[row, column] notation. Simply choose all of the rows/columns you want to keep (ignoring the ones you want to delete), and assign the subset to either the original data frame variable (to permanently delete the rows/columns), or to a new variable storing an edited copy of the data frame. In general, it is best to create a copy that way you always have access to your original unedited data frame if needed.
 
 The syntax is as follows:
 
@@ -473,7 +476,7 @@ The syntax is as follows:
 df_copy <- df[rows_to_keep, columns_to_keep]
 ```
 
-Use the above syntax to save a copy of the mtcars data without the "am" column. Remember to use colnames() to find the column number of "am". Also recall that to select row/columns to drop (hence selecting everything else), you can use "-#".
+Use the above syntax to save a copy of the mtcars data without the "am" column. Remember to use colnames() to find the column number of "am". Also recall that to select row/columns to drop (hence selecting everything else), you can use "-index #".
 
 ```{r Exercise 9.4}
 # write code here
@@ -496,10 +499,10 @@ if (!require(package)){ # you only need to install a package once, this checks t
 install.packages("package")
 }
 
-library(package) # you need to load in a package in every file that uses it (it's good pratice to run all package related lines at the top of your file)
+library(package) # you need to load in a package in every file that uses it (it's good practice to run all package related lines at the top of your file)
 ```
 
-In our next class, we will be using the BiocManager and TCGAbiolinks packages. Go ahead and install run the following lines to install and load those packages (it might take a while!)
+In our next class, we will be using the BiocManager and TCGAbiolinks packages. Go ahead and run the following lines to install and load those packages (it might take a while!)
 
 If it asks "Update all/some/none? [a/s/n]:" type "a"
 If it asks "Do you want to install from sources the package which needs compilation (Yes/no/cancel)" type "Yes
@@ -533,11 +536,11 @@ Try this out on the is.na() function (you'll need this in your homework)
 
 ###### (12) Further Practice
 
-Pull the R_Tutorial.Rmd file (in week3_r) from the course materials repo. That file will take your through 
+Pull the R_Tutorial.Rmd file (in week3_r) from the course materials repo. That file will take your through some more practice exercises.
 
 For even more practice, use swirl(), a packages that holds multiple courses on R basics, statistics, and data analysis.
 
-To use swirl, open up an R Script file (use the plus button in the top left corner). Then run the following commands.
+To use swirl, open up an R Script file (use the plus button in the top left corner of RStudio). Then run the following commands.
 
 ```{r}
 if (!require(swirl)){
