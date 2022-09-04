@@ -4,15 +4,15 @@ author: Nicole Black
 date: 07/17/22
 ---
 
-Welcome to your first experience using TCGA data in R! The first data type we will begin with is clinical data (ex: sex, age, etc.)
+Welcome to your first experience using TCGA data in R! The first data type we will begin with is clinical data (ex: sex, age at initial diagnosis, tumor subtype, etc.)
 
 ###### (1) Set up your working environment
 
-Before running this code, make sure you are in the correct working directory (your Github repository) with getwd() and setwd(). Otherwise you’ll have trouble tracking the data down!
+Before running this code, make sure you are in the correct working directory (your personal qbio_490_name folder) with getwd() and setwd(). Otherwise you’ll have trouble tracking the data down!
 
-As good general practice to keep things organized, create an "analysis_data" folder in the root of your GitHub repository (your qbio_490_name folder), then set that folder as your working directory ("/PATH/TO/qbio_490_name/analysis_data") whenever you are working with TCGA files. You can create the folder in your CLI or GUI.
+As good general practice to keep things organized, create an "analysis_data" folder in the root of your GitHub repository (your qbio_490_name folder), then set that folder as your working directory ("/PATH/TO/qbio_490_name/analysis_data") whenever you are working with TCGA files. You can create the folder through your command line now.
 
-Go ahead and do that now:
+Once the folder is created, set your working directory below:
 
 ```{r setup}
     knitr::opts_knit$set(root.dir = normalizePath("/PATH/TO/analysis_data")) 
@@ -62,9 +62,9 @@ View the structure of the data as well as the first few lines. What two commands
 
 Answer the following questions based on the output of those commands: 
 1. How many rows are there? How many columns?
-2. What is the data type of $ gender?
+2. What is the data type of $gender?
 3. What is the age in years of the 5th patient (barcode: TCGA-4H-AAAK)?
-4. How old was the 1st patient at their last follow up (barcode: TCGA-3C-AAAU)? HINT: look at data from two columns
+4. How old was the 1st patient at their last follow up (barcode: TCGA-3C-AAAU)? HINT: you need to look at data from two columns to answer this
 
 ```{r Exercise 3.1}
 # write code here
