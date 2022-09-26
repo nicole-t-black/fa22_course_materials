@@ -7,7 +7,7 @@ date: 07/31/22
 ###### (1) Set Up
 
 ```{r setup}
-    knitr::opts_knit$set(root.dir = normalizePath("/Users/nblack/Desktop/QBIO_490/qbio_490_nicole/analysis_data/")) 
+    knitr::opts_knit$set(root.dir = normalizePath("/PATH/TO/analysis_data")) 
 ```
 
 ```{r}
@@ -26,20 +26,27 @@ We also need to change the bcr_patient_barcode column name that way the MAF pack
 colnames(clinical)[ colnames(clinical) == "bcr_patient_barcode" ] <- "Tumor_Sample_Barcode"
 ```
 
+After changing the column name, re-save the clinical data frame to your computer.
+
+```{r}
+# change the file path! make sure it's in your week4 folder
+write.csv(clinical, "/PATH/TO/DESTINATION/brca_clinical_data.csv", row.names = FALSE)
+```
+
 ###### (2) MAF Package
 
 Now, we can query in the MAF files using GDCquery()/GDCdownload()/GDCprepare() and read.maf(). 
 
 ```{r Exercise 2.1}
-query <- GDCquery(
+maf_query <- GDCquery(
     project = FILL IN HERE, 
     data.category = "Simple Nucleotide Variation", 
     access = "open", # we only have access to somatic mutations which are open access
     data.type = "Masked Somatic Mutation", 
     workflow.type = "Aliquot Ensemble Somatic Variant Merging and Masking"
 )
-GDCdownload(query)
-maf <- GDCprepare(query) # as long as it runs, ignore any errors
+GDCdownload(maf_query)
+maf <- GDCprepare(maf_query) # as long as it runs, ignore any errors
 
 maf_object <- read.maf(maf = FILL IN HERE, 
                        clinicalData = FILL IN HERE,
@@ -65,13 +72,13 @@ List all of the data frames within the maf_object by typing maf_object@ then eit
 # write code here
 ```
 
-Call head() and str() on the data df and the clinical.data df. These will be the main data frames we use in our MAF analysis.
+Call head() and str() on the @data df and the @clinical.data df. These will be the main data frames we use in our MAF analysis.
 
 ```{r Exercise 3.3}
 # write code here
 ```
 
-View the first 110 items in Tumor_Sample_Barcode from data and clinical.data.
+View the first 110 items in Tumor_Sample_Barcode from @data and @clinical.data.
 
 ```{r Exercise 3.4}
 # write code here
@@ -79,32 +86,43 @@ View the first 110 items in Tumor_Sample_Barcode from data and clinical.data.
 
 What do you notice about these two lists?
 
-Call head() on the Amino_acids column in data.
+View the Tumor_Sample_Barcode column and the HGVSp_Short column for all TP53 mutations (i.e. Hugo_Symbol == "TP53"). Hint: boolean masking!
 
 ```{r Exercise 3.5}
 # write code here
 ```
 
-Call head() on the HGVSp_Short column in data.
+Call head() on the Amino_acids column in @data.
 
 ```{r Exercise 3.6}
 # write code here
 ```
 
-Answer the following questions:
-  
-  How many columns are there in data?
-  
-  How many levels are there in Tumor_Sample_Barcode (from data)?
-  Are there duplicate values in Tumor_Sample_Barcode?
-  
-  How many unique entries are there in Amino_acids?
-  Are there duplicate values in Amino_acids?
-  
-  How many unique entries are there in HGVSp_Short?
-  Are there duplicate values in HGVSp_Short?
+What mutation could cause a S/R change?
+
+What about an A/T change?
+
+Call head() on the HGVSp_Short column in @data.
 
 ```{r Exercise 3.7}
 # write code here
 ```
 
+What does p.P728Afs*11 mean? (Do some google-ing!)
+
+```{r Exercise 3.8}
+# use this code block for the following questions:
+```
+  
+  How many rows/columns are there in @data?
+  
+  What type of data is stored in the rows? What about the columns?
+  
+  How many levels are there in Tumor_Sample_Barcode (from @data)?
+  Are there duplicate values in Tumor_Sample_Barcode?
+  
+  How many unique values are there in Amino_acids?
+  Are there duplicate values in Amino_acids?
+  
+  How many unique values are there in HGVSp_Short?
+  Are there duplicate values in HGVSp_Short?

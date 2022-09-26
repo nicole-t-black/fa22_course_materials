@@ -1,0 +1,69 @@
+---
+title: "MAF Tutorial - Analysis"
+author: Nicole Black
+date: 08/07/22
+---
+
+###### (1) Set Up
+
+Set your working environment to analysis_data:
+
+```{r setup}
+    knitr::opts_knit$set(root.dir = normalizePath("/PATH/TO/analysis_data")) 
+```
+
+Install and load the ggplot2 package:
+
+```{r}
+
+```
+
+Load in the maftools and TCGAbiolinks package:
+
+```{r}
+# write code here
+```
+
+Load in your saved MAF data by reading in your clinical data, re-preparing maf_query, and then calling read.maf(). See Intro_to_MAF.Rmd if you need help.
+
+```{r}
+# write code here
+clinical <- read.csv("/PATH/TO/week4_clinical/brca_clinical_data.csv")
+
+maf <- GDCprepare(maf_query) # as long as it runs, ignore any errors
+
+maf_object <- read.maf(maf = FILL IN HERE, 
+                       clinicalData = FILL IN HERE,
+                       isTCGA = TRUE)
+```
+
+
+Lollipop Plot (+co Lollipop Plots)
+
+
+rainfall Plot
+
+
+Mutual exclusivity/co-occurance (somaticInteractions)
+
+
+Survival Analysis (mafSurvival)
+
+
+
+###### (5) Looking Ahead
+
+Query, download, and prepare the RNA Transcriptomics data in to your R work space. Confirm that your working directory is analysis_data before you run these lines.
+
+Note that this is super slow!! Don't worry, just wait it out.
+
+```{r}
+rna_query <- GDCquery(project = FILL IN HERE,
+                      data.category = "Transcriptome Profiling",
+                      data.type = "Gene Expression Quantification",
+                      workflow.type = "STAR - Counts")
+
+GDCdownload(rna_query)
+
+rna_se <- GDCprepare(rna_query)
+```
